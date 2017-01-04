@@ -22,7 +22,7 @@ public class ScrPlay implements Screen {
     private ContactListener1 contactListener;
     private RayHandler rayHandler;
     private float Ambience = 0, ChangeRate = 0.001f;
-    boolean bChangeLighting = false;
+    boolean bChangeLighting = true;
 
     public ScrPlay(GamGeoDash game) {
         this.game = game;
