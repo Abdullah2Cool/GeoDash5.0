@@ -13,6 +13,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import box2dLight.RayHandler;
+
 import static game.geodash.GamGeoDash.PPM;
 
 /**
@@ -25,8 +27,9 @@ public class Player implements InputProcessor {
     private Body pBody;
     private Sprite spPlayer;
     private float fSpeed, fJumpHeight;
+    private Light light;
 
-    public Player(Vector2 vPos, float fLength, World world, String sPath) {
+    public Player(Vector2 vPos, float fLength, World world, String sPath, RayHandler rayHandler) {
         this.vPos = new Vector2(vPos);
         vInitialPos = new Vector2(vPos);
         this.world = world;
@@ -36,6 +39,7 @@ public class Player implements InputProcessor {
         fJumpHeight = -world.getGravity().scl(15.5f).y;
         System.out.println(fJumpHeight);
         Gdx.input.setInputProcessor(this);
+        light = new Light(rayHandler, 100, 200, 50);
     }
 
     private Body createBody(Vector2 vPos, float fLength) {
@@ -63,6 +67,7 @@ public class Player implements InputProcessor {
         batch.draw(spPlayer, vPos.x - 16, vPos.y - 16, spPlayer.getOriginX(), spPlayer.getOriginY(),
                 spPlayer.getWidth(), spPlayer.getHeight(), 1, 1, (float) Math.toDegrees(pBody.getAngle()));
         move();
+        light.update(pBody);
     }
 
     public void move() {
